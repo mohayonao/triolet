@@ -1,0 +1,27 @@
+{
+  "name": "triolet.dsp",
+  "description": "TrioletDSP",
+  "version": "0.2.0",
+  "author": "Nao Yonamine <mohayonao@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/mohayonao/triolet/issues"
+  },
+  "dependencies": {
+    "triolet._config": "^0.1.0"
+  },
+  "files": [
+    "README.md",
+    "index.js",
+    "package.json"
+  ],
+  "homepage": "https://github.com/mohayonao/triolet/tree/master/triolet.dsp",
+  "keywords": [
+    "triolet"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohayonao/triolet.git"
+  }
+}
