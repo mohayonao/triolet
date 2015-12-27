@@ -1,0 +1,24 @@
+{
+  "name": "triolet._validator",
+  "description": "validator for triolet",
+  "version": "0.4.0",
+  "author": "Nao Yonamine <mohayonao@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/mohayonao/triolet/issues"
+  },
+  "files": [
+    "README.md",
+    "index.js",
+    "package.json"
+  ],
+  "homepage": "https://github.com/mohayonao/triolet/tree/master/triolet.validator",
+  "keywords": [
+    "triolet"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohayonao/triolet.git"
+  }
+}
