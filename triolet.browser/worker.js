@@ -1,3 +1,5 @@
+var validator = require("triolet._validator");
+
 function Triolet(self) {
   var _this = this;
 
@@ -5,6 +7,7 @@ function Triolet(self) {
   this.dsp = null;
   this.sampleRate = 0;
   this.bufferLength = 0;
+  this.state = "uninitialized";
 
   this._bufSlots = null;
   this._bufSlotCount = 0;
@@ -23,6 +26,12 @@ function Triolet(self) {
 Triolet.prototype.compose = function(spec) {
   var dsp = spec.dsp;
 
+  if (this.state !== "uninitialized" || !validator.isDSP(dsp)) {
+    throw new Error("Failed to execute 'compose' on 'Triolet'");
+  }
+
+  this.state = "composed";
+
   this.dsp = dsp;
 
   dsp.triolet = this;
@@ -31,11 +40,17 @@ Triolet.prototype.compose = function(spec) {
 };
 
 Triolet.prototype.setup = function(opts) {
+  if (this.state !== "composed") {
+    throw new Error("Failed to execute 'setup' on 'Triolet'");
+  }
+
+  this.state = "suspended";
+
   this.dsp.setup(opts);
 
   this.sampleRate = opts.sampleRate;
   this.bufferLength = opts.bufferLength;
-  this._bufSlotCount = opts.bufSlotCount;
+  this._bufSlotCount = opts.bufferSlotCount;
   this._bufSlots = new Array(this._bufSlotCount);
 
   for (var i = 0; i < this._bufSlots.length; i++) {
@@ -45,22 +60,28 @@ Triolet.prototype.setup = function(opts) {
   this._dspBufLength = this.dsp.bufferLength;
   this._dspBufL = new Float32Array(this._dspBufLength);
   this._dspBufR = new Float32Array(this._dspBufLength);
+
+  return this;
 };
 
 Triolet.prototype.start = function() {
   var _this = this;
   var interval = Math.floor((this.bufferLength / this.sampleRate) * 500);
 
-  if (this._timerId === 0) {
+  if (this.state === "suspended") {
+    this.state = "running";
     this.dsp.start();
     this._timerId = setInterval(function() {
       _this.process();
     }, interval);
   }
+
+  return this;
 };
 
 Triolet.prototype.stop = function() {
-  if (this._timerId !== 0) {
+  if (this.state === "running") {
+    this.state = "suspended";
     this.dsp.stop();
     clearInterval(this._timerId);
     this._timerId = 0;
