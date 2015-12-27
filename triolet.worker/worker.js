@@ -1,5 +1,6 @@
 var assign = require("object-assign");
 var config = require("triolet._config");
+var validator = require("triolet._validator");
 
 function Triolet(self) {
   var _this = this;
@@ -41,6 +42,12 @@ Triolet.prototype.compose = function(spec) {
   var api = spec.api;
   var dsp = spec.dsp;
 
+  if (this.state !== "uninitialized" || !(validator.isAPI(api) && validator.isDSP(dsp))) {
+    throw new Error("Failed to execute 'compose' on 'Triolet'");
+  }
+
+  this.state = "composed";
+
   this.api = api;
   this.dsp = dsp;
 
@@ -51,6 +58,10 @@ Triolet.prototype.compose = function(spec) {
 };
 
 Triolet.prototype.setup = function(opts) {
+  if (this.state !== "composed") {
+    throw new Error("Failed to execute 'setup' on 'Triolet'");
+  }
+
   this.state = "suspended";
 
   opts = assign(config(), opts);
@@ -64,7 +75,7 @@ Triolet.prototype.setup = function(opts) {
 
   this.api.setup(opts);
   this.dsp.setup(opts);
-  this._bufSlotCount = opts.bufSlotCount;
+  this._bufSlotCount = opts.bufferSlotCount;
   this._bufSlots = new Array(this._bufSlotCount);
 
   for (var i = 0; i < this._bufSlots.length; i++) {
@@ -91,6 +102,7 @@ Triolet.prototype.start = function() {
       _this.process();
     }, interval);
   }
+
   return this;
 };
 
@@ -101,6 +113,7 @@ Triolet.prototype.stop = function() {
     this.dsp.stop();
     this.dsp.stop();
   }
+
   return this;
 };
 
