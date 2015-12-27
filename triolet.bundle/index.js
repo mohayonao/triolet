@@ -1,5 +1,6 @@
 var assign = require("object-assign");
 var config = require("triolet._config");
+var validator = require("triolet._validator");
 
 function Triolet() {
   this.api = null;
@@ -19,6 +20,12 @@ Triolet.prototype.compose = function(spec) {
   var dsp = spec.dsp;
   var driver = spec.driver;
 
+  if (this.state !== "uninitialized" || !(validator.isAPI(api) && validator.isDSP(dsp) && validator.isDriver(driver))) {
+    throw new Error("Failed to execute 'compose' on 'Triolet'");
+  }
+
+  this.state = "composed";
+
   this.api = api;
   this.dsp = dsp;
   this.driver = driver;
@@ -31,6 +38,10 @@ Triolet.prototype.compose = function(spec) {
 };
 
 Triolet.prototype.setup = function(opts) {
+  if (this.state !== "composed") {
+    throw new Error("Failed to execute 'setup' on 'Triolet'");
+  }
+
   this.state = "suspended";
 
   opts = assign(config(), opts);
