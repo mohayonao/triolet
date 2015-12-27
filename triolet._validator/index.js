@@ -15,7 +15,7 @@ function isDSP(object) {
 }
 
 function isDriver(object) {
-  return DriverInterfaces.evetry(function(name) {
+  return DriverInterfaces.every(function(name) {
     return object && typeof object[name] === "function";
   });
 }
