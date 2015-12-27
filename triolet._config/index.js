@@ -4,6 +4,6 @@ module.exports = function() {
     channels: 2,
     bufferLength: 1024,
     dspBufferLength: 64,
-    bufSlotCount: 8
+    bufferSlotCount: 8
   };
 };
