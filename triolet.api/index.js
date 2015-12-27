@@ -2,16 +2,13 @@ function TrioletAPI() {
   this.triolet = null;
 }
 
-TrioletAPI.prototype.setup = function(opts) {
-  this.triolet.setup(opts);
+TrioletAPI.prototype.setup = function() {
 };
 
 TrioletAPI.prototype.start = function() {
-  this.triolet.start();
 };
 
 TrioletAPI.prototype.stop = function() {
-  this.triolet.stop();
 };
 
 TrioletAPI.prototype.sendToServer = function() {

@@ -25,9 +25,6 @@ $ npm install triolet.api
 ```
 interface Server {
   api: TrioletAPI;
-  setup(opts: object) => void;
-  start() => void;
-  stop() => void;
   sendToServer(...args: any) => void;
 }
 ```
