@@ -1,4 +1,8 @@
 # triolet.dsp
+[![NPM Version](http://img.shields.io/npm/v/triolet.dsp.svg?style=flat-square)](https://www.npmjs.org/package/triolet.dsp)
+[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://mohayonao.mit-license.org/)
+
+> base class for triolet DSP
 
 ## Installation
 
@@ -11,7 +15,7 @@ $ npm install triolet.dsp
 - `constructor()`
 
 #### Instance attributes
-- `triolet: Server` _(required)_
+- `triolet: Triolet` _(required)_
 - `sampleRate: number` _(readonly)_
 - `bufferLength: number` _(readonly)_
 
@@ -23,9 +27,9 @@ $ npm install triolet.dsp
 - `recvFromClient(data: object): void`
 - `process(bufL: Float32Array, bufR: sampleRate): void`
 
-#### Server Interface
+#### Triolet Interface
 ```
-interface Server {
+interface Triolet {
   dsp: TrioletDSP;
   sendToClient(...args: any) => void;
 }
