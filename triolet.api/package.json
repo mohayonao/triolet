@@ -1,7 +1,7 @@
 {
   "name": "triolet.api",
-  "description": "TrioletAPI",
-  "version": "0.3.0",
+  "description": "base class for triolet API",
+  "version": "0.4.0",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/triolet/issues"
@@ -11,7 +11,7 @@
     "index.js",
     "package.json"
   ],
-  "homepage": "https://github.com/mohayonao/triolet/tree/master/triolet",
+  "homepage": "https://github.com/mohayonao/triolet/tree/master/triolet.api",
   "keywords": [
     "triolet"
   ],
