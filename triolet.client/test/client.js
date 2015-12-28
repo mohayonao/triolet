@@ -47,7 +47,7 @@ describe("triolet.client/client", () => {
       assert(triolet.api === api);
       assert(triolet.driver === driver);
       assert(api.triolet === triolet);
-      assert(driver.triolet === triolet);
+      assert(driver.processor === triolet);
       assert(triolet.state === "composed");
     });
     it("throws an exception if call more than once", () => {

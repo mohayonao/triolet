@@ -35,7 +35,7 @@ Triolet.prototype.compose = function(spec) {
   };
 
   api.triolet = this;
-  driver.triolet = this;
+  driver.processor = this;
 
   return this;
 };
