@@ -1,13 +1,13 @@
 {
   "name": "triolet.driver.webaudio",
   "description": "AudioDriver for Web Audio API",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/triolet/issues"
   },
   "dependencies": {
-    "triolet.driver": "^0.2.0"
+    "triolet.driver": "^0.3.0"
   },
   "files": [
     "README.md",

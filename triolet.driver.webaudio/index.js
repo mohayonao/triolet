@@ -30,17 +30,17 @@ TrioletWebAudioDriver.prototype.setup = function(opts) {
 };
 
 TrioletWebAudioDriver.prototype.start = function() {
-  var triolet = this.triolet;
+  var processor = this.processor;
   var bufL = new Float32Array(this.bufferLength);
   var bufR = new Float32Array(this.bufferLength);
 
-  if (this._context !== null && this.triolet !== null && this._scp === null) {
+  if (this._context !== null && this.processor !== null && this._scp === null) {
     this._scp = this._context.createScriptProcessor(this.bufferLength, 0, 2);
     if (typeof AudioBuffer.prototype.copyToChannel === "function") {
       this._scp.onaudioprocess = function(e) {
         var buf = e.outputBuffer;
 
-        triolet.process(bufL, bufR);
+        processor.process(bufL, bufR);
 
         buf.copyToChannel(bufL, 0);
         buf.copyToChannel(bufR, 1);
@@ -49,7 +49,7 @@ TrioletWebAudioDriver.prototype.start = function() {
       this._scp.onaudioprocess = function(e) {
         var buf = e.outputBuffer;
 
-        triolet.process(bufL, bufR);
+        processor.process(bufL, bufR);
 
         buf.getChannelData(0).set(bufL);
         buf.getChannelData(1).set(bufR);
