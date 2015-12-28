@@ -1,5 +1,3 @@
-var validator = require("triolet._validator");
-
 function Triolet(self) {
   var _this = this;
 
@@ -8,6 +6,7 @@ function Triolet(self) {
   this.sampleRate = 0;
   this.bufferLength = 0;
   this.state = "uninitialized";
+  this.timerAPI = global;
 
   this._bufSlots = null;
   this._bufSlotCount = 0;
@@ -26,7 +25,7 @@ function Triolet(self) {
 Triolet.prototype.compose = function(spec) {
   var dsp = spec.dsp;
 
-  if (this.state !== "uninitialized" || !validator.isDSP(dsp)) {
+  if (this.state !== "uninitialized") {
     throw new Error("Failed to execute 'compose' on 'Triolet'");
   }
 
@@ -71,7 +70,7 @@ Triolet.prototype.start = function() {
   if (this.state === "suspended") {
     this.state = "running";
     this.dsp.start();
-    this._timerId = setInterval(function() {
+    this._timerId = this.timerAPI.setInterval(function() {
       _this.process();
     }, interval);
   }
@@ -83,7 +82,7 @@ Triolet.prototype.stop = function() {
   if (this.state === "running") {
     this.state = "suspended";
     this.dsp.stop();
-    clearInterval(this._timerId);
+    this.timerAPI.clearInterval(this._timerId);
     this._timerId = 0;
   }
 };
