@@ -1,7 +1,7 @@
 var config = require("triolet._config")();
 
 function TrioletDriver() {
-  this.triolet = null;
+  this.processor = null;
   this.sampleRate = 0;
   this.bufferLength = 0;
 }
