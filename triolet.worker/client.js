@@ -1,6 +1,5 @@
 var assign = require("object-assign");
 var config = require("triolet._config");
-var validator = require("triolet._validator");
 
 function Triolet() {
   this.driver = null;
@@ -20,7 +19,7 @@ Triolet.prototype.compose = function(spec) {
   var driver = spec.driver;
   var workerPath = spec.workerPath;
 
-  if (this.state !== "uninitialized" || !(validator.isDriver(driver) && typeof workerPath === "string")) {
+  if (this.state !== "uninitialized") {
     throw new Error("Failed to execute 'compose' on 'Triolet'");
   }
 
