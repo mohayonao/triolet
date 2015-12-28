@@ -1,0 +1,43 @@
+var TrioletAPI = require("triolet.api");
+
+function API() {
+  TrioletAPI.call(this);
+}
+inherits(API, TrioletAPI);
+
+API.prototype.setup = function(opts) {
+  this.sampleRate = opts.sampleRate;
+  this._schedOffset = +opts.schedOffset || 0;
+};
+
+API.prototype.start = function() {
+  this._counter = 0;
+  this._currentTime = 0;
+};
+
+API.prototype.process = function(inNumSamples) {
+  this._currentTime += inNumSamples / this.sampleRate;
+
+  if (this._counter <= 0) {
+    this.triolet.sendToServer({
+      type: "changeFrequency",
+      playbackTime: this._currentTime + this._schedOffset,
+      noteNum: sample([ 0, 2, 4, 5, 7, 9, 11 ]),
+      channel: sample([ 0, 1 ])
+    })
+    this._counter += this.sampleRate * 0.25;
+  }
+  this._counter -= inNumSamples;
+};
+
+function inherits(ctor, superCtor) {
+  ctor.prototype = Object.create(superCtor.prototype, {
+    constructor: { value: ctor, enumerable: false, writable: true, configurable: true }
+  });
+}
+
+function sample(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+module.exports = API;

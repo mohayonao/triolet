@@ -1,0 +1,11 @@
+{
+  "name": "@triolet-example/sine-tone-node",
+  "version": "1.0.0",
+  "dependencies": {
+    "@triolet-example/sine-tone": "file:..",
+    "triolet.bundle": "^0.4.0",
+    "triolet.driver.nodeaudio": "^0.2.0"
+  },
+  "main": "src/index.js",
+  "private": true
+}
