@@ -16,17 +16,17 @@ function TrioletNodeAudioDriver() {
 inherits(TrioletNodeAudioDriver, TrioletDriver);
 
 TrioletNodeAudioDriver.prototype.start = function() {
-  var triolet = this.triolet;
+  var processor = this.processor;
   var bufferLength = this.bufferLength;
   var bufL = new Float32Array(bufferLength);
   var bufR = new Float32Array(bufferLength);
   var buf = new Buffer(bufferLength * 2 * 4);
   var node;
 
-  if (this.triolet !== null && this._node === null) {
+  if (this.processor !== null && this._node === null) {
     node = new Readable();
     node._read = function() {
-      triolet.process(bufL, bufR);
+      processor.process(bufL, bufR);
 
       for (var i = 0; i < bufferLength; i++) {
         buf.writeFloatLE(bufL[i], i * 8 + 0);

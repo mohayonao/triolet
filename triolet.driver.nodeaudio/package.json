@@ -1,14 +1,14 @@
 {
   "name": "triolet.driver.nodeaudio",
   "description": "AudioDriver for Node.js",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/triolet/issues"
   },
   "dependencies": {
     "speaker": "^0.2.6",
-    "triolet.driver": "^0.2.0"
+    "triolet.driver": "^0.3.0"
   },
   "files": [
     "README.md",
