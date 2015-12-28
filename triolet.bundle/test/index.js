@@ -36,7 +36,7 @@ describe("triolet.bundle", () => {
       assert(triolet.driver === driver);
       assert(api.triolet === triolet);
       assert(dsp.triolet === triolet);
-      assert(driver.triolet === triolet);
+      assert(driver.processor === triolet);
       assert(triolet.state === "composed");
     });
     it("throws an exception if call more than once", () => {
