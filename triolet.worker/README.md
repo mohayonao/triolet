@@ -12,6 +12,36 @@
 $ npm install triolet.worker
 ```
 
+## Example
+
+```js
+const triolet = require("triolet.worker/client");
+const Driver = require("pico.driver.webaudio");
+
+let audioContext = new AudioContext();
+
+triolet.compose({ workerPath: "/path/to/worker", driver: new Driver() });
+triolet.setup({ context: audioContext, bufferLength: 1024 });
+
+triolet.sendToWorker({ type: "start" });
+```
+
+worker.js
+
+```js
+const triolet = require("triolet.worker/worker");
+const API = require("./api");
+const DSP = require("./dsp");
+
+triolet.compose({ api: new API(), dsp: new DSP() });
+
+triolet.recvFromClient = (e) => {
+  if (e.type === "start") {
+    triolet.start();
+  }
+};
+```
+
 ## API
 ### client/Triolet
 - `constructor()`
@@ -51,9 +81,28 @@ $ npm install triolet.worker
 ## Interfaces
 
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
+
+```
+interface trioletAPI {
+  optional setup(opts: object) => void;
+  optional start() => void;
+  optional stop() => void;
+  process(inNumSamples: number) => void;
+}
+```
+
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
 
-## Audio Driver
+```
+interface trioletDSP {
+  optional setup(opts: object) => void;
+  optional start() => void;
+  optional stop() => void;
+  process(bufL: Float32Array, bufR: Float32Array) => void;
+}
+```
+
+## Audio Drivers
 
 - https://github.com/mohayonao/pico.driver
 

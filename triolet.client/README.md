@@ -12,6 +12,30 @@
 $ npm install triolet.client
 ```
 
+## Example
+
+```js
+const triolet = require("triolet.client/client");
+const Driver = require("pico.driver.webaudio");
+const API = require("./api");
+
+let audioContext = new AudioContext();
+
+triolet.compose({ workerPath: "/path/to/worker", api: new API(), driver: new Driver() });
+triolet.setup({ context: audioContext, bufferLength: 1024 });
+
+triolet.start();
+```
+
+worker.js
+
+```js
+const triolet = require("triolet.client/worker");
+const DSP = require("./dsp");
+
+triolet.compose({ dsp: new DSP() });
+```
+
 ## API
 ### client/Triolet
 - `constructor()`
@@ -49,9 +73,28 @@ $ npm install triolet.client
 ## Interfaces
 
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
+
+```
+interface trioletAPI {
+  optional setup(opts: object) => void;
+  optional start() => void;
+  optional stop() => void;
+  process(inNumSamples: number) => void;
+}
+```
+
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
 
-## Audio Driver
+```
+interface trioletDSP {
+  optional setup(opts: object) => void;
+  optional start() => void;
+  optional stop() => void;
+  process(bufL: Float32Array, bufR: Float32Array) => void;
+}
+```
+
+## Audio Drivers
 
 - https://github.com/mohayonao/pico.driver
 

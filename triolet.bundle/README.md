@@ -12,6 +12,22 @@ All components in the main thread. This architecture works on the browser and th
 $ npm install triolet.bundle
 ```
 
+## Example
+
+```js
+const triolet = require("triolet.bundle");
+const Driver = require("pico.driver.webaudio");
+const API = require("./api");
+const DSP = require("./dsp");
+
+let audioContext = new AudioContext();
+
+triolet.compose({ api: new API(), dsp: new DSP(), driver: new Driver() });
+triolet.setup({ context: audioContext, bufferLength: 1024 });
+
+triolet.start();
+```
+
 ## API
 ### Triolet
 - `constructor()`
@@ -35,9 +51,28 @@ $ npm install triolet.bundle
 ## Interfaces
 
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
+
+```
+interface trioletAPI {
+  optional setup(opts: object) => void;
+  optional start() => void;
+  optional stop() => void;
+  process(inNumSamples: number) => void;
+}
+```
+
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
 
-## Audio Driver
+```
+interface trioletDSP {
+  optional setup(opts: object) => void;
+  optional start() => void;
+  optional stop() => void;
+  process(bufL: Float32Array, bufR: Float32Array) => void;
+}
+```
+
+## Audio Drivers
 
 - https://github.com/mohayonao/pico.driver
 

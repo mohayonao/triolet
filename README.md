@@ -17,6 +17,20 @@ All components in the main thread. This architecture works on the browser and th
 $ npm install triolet.bundle
 ```
 
+```js
+const triolet = require("triolet.bundle");
+const Driver = require("pico.driver.webaudio");
+const API = require("./api");
+const DSP = require("./dsp");
+
+let audioContext = new AudioContext();
+
+triolet.compose({ api: new API(), dsp: new DSP(), driver: new Driver() });
+triolet.setup({ context: audioContext, bufferLength: 1024 });
+
+triolet.start();
+```
+
 ### triolet.client
 [![NPM Version](http://img.shields.io/npm/v/triolet.client.svg?style=flat-square)](https://www.npmjs.org/package/triolet.client)
 
@@ -26,6 +40,28 @@ $ npm install triolet.bundle
 
 ```
 $ npm install triolet.client
+```
+
+```js
+const triolet = require("triolet.client/client");
+const Driver = require("pico.driver.webaudio");
+const API = require("./api");
+
+let audioContext = new AudioContext();
+
+triolet.compose({ workerPath: "/path/to/worker", api: new API(), driver: new Driver() });
+triolet.setup({ context: audioContext, bufferLength: 1024 });
+
+triolet.start();
+```
+
+worker.js
+
+```js
+const triolet = require("triolet.client/worker");
+const DSP = require("./dsp");
+
+triolet.compose({ dsp: new DSP() });
 ```
 
 ### triolet.worker
@@ -39,10 +75,57 @@ $ npm install triolet.client
 $ npm install triolet.worker
 ```
 
+```js
+const triolet = require("triolet.worker/client");
+const Driver = require("pico.driver.webaudio");
+
+let audioContext = new AudioContext();
+
+triolet.compose({ workerPath: "/path/to/worker", driver: new Driver() });
+triolet.setup({ context: audioContext, bufferLength: 1024 });
+
+triolet.sendToWorker({ type: "start" });
+```
+
+worker.js
+
+```js
+const triolet = require("triolet.worker/worker");
+const API = require("./api");
+const DSP = require("./dsp");
+
+triolet.compose({ api: new API(), dsp: new DSP() });
+
+triolet.recvFromClient = (e) => {
+  if (e.type === "start") {
+    triolet.start();
+  }
+};
+```
+
 ## Interfaces
 
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
+
+```
+interface trioletAPI {
+  optional setup(opts: object) => void;
+  optional start() => void;
+  optional stop() => void;
+  process(inNumSamples: number) => void;
+}
+```
+
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
+
+```
+interface trioletDSP {
+  optional setup(opts: object) => void;
+  optional start() => void;
+  optional stop() => void;
+  process(bufL: Float32Array, bufR: Float32Array) => void;
+}
+```
 
 ## Audio Drivers
 
