@@ -1,5 +1,6 @@
 var assign = require("object-assign");
 var config = require("triolet._config");
+var noop = function() {};
 
 function Triolet() {
   this.api = null;
@@ -34,6 +35,13 @@ Triolet.prototype.compose = function(spec) {
     _this.recvFromWorker(e.data);
   };
 
+  if (typeof api.recvFromDSP !== "function") {
+    api.recvFromDSP = noop;
+  }
+  if (typeof api.process !== "function") {
+    api.process = noop;
+  }
+
   api.triolet = this;
   driver.processor = this;
 
@@ -57,7 +65,9 @@ Triolet.prototype.setup = function(opts) {
     sampleRate: this.sampleRate, bufferLength: this.bufferLength
   });
 
-  this.api.setup(opts);
+  if (typeof this.api.setup === "function") {
+    this.api.setup(opts);
+  }
 
   opts = JSON.parse(JSON.stringify(opts));
   opts = assign(opts, { type: ":setup" });
@@ -74,7 +84,9 @@ Triolet.prototype.start = function() {
   if (this.state === "suspended") {
     this.state = "running";
     this.driver.start();
-    this.api.start();
+    if (typeof this.api.start === "function") {
+      this.api.start();
+    }
     this._worker.postMessage({ type: ":start" });
   }
   return this;
@@ -84,7 +96,9 @@ Triolet.prototype.stop = function() {
   if (this.state === "running") {
     this.state = "suspended";
     this.driver.stop();
-    this.api.stop();
+    if (typeof this.api.stop === "function") {
+      this.api.stop();
+    }
     this._worker.postMessage({ type: ":stop" });
   }
   return this;
