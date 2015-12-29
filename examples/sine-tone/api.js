@@ -1,9 +1,5 @@
-var TrioletAPI = require("triolet.api");
-
 function API() {
-  TrioletAPI.call(this);
 }
-inherits(API, TrioletAPI);
 
 API.prototype.setup = function(opts) {
   this.sampleRate = opts.sampleRate;
@@ -33,12 +29,6 @@ API.prototype.process = function(inNumSamples) {
 API.prototype.recvFromClient = function(data) {
   this[data.type](data);
 };
-
-function inherits(ctor, superCtor) {
-  ctor.prototype = Object.create(superCtor.prototype, {
-    constructor: { value: ctor, enumerable: false, writable: true, configurable: true }
-  });
-}
 
 function sample(list) {
   return list[Math.floor(Math.random() * list.length)];

@@ -4,7 +4,7 @@
   "dependencies": {
     "@triolet-example/sine-tone": "file:..",
     "pico.driver.webaudio": "^1.0.1",
-    "triolet.worker": "^0.7.4"
+    "triolet.worker": "^0.8.0"
   },
   "devDependencies": {
     "browserify": "^12.0.1",

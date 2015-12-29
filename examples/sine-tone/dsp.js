@@ -1,8 +1,4 @@
-var TrioletDSP = require("triolet.dsp");
-
 function DSP() {
-  TrioletDSP.call(this);
-
   this._currentTime = 0;
   this._phaseL = 0;
   this._phaseR = 0;
@@ -10,7 +6,6 @@ function DSP() {
   this._phaseRstep = 0;
   this._sched = [];
 }
-inherits(DSP, TrioletDSP);
 
 DSP.prototype.setup = function(opts) {
   this.sampleRate = opts.sampleRate;
@@ -62,12 +57,6 @@ DSP.prototype._execSched = function(schedItem) {
       this._phaseRstep = (freq / this.sampleRate) * Math.PI * 2;
     }
   }
-}
-
-function inherits(ctor, superCtor) {
-  ctor.prototype = Object.create(superCtor.prototype, {
-    constructor: { value: ctor, enumerable: false, writable: true, configurable: true }
-  });
 }
 
 module.exports = DSP;
