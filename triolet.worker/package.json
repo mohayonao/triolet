@@ -1,7 +1,7 @@
 {
   "name": "triolet.worker",
   "description": "triolet.worker",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/triolet/issues"

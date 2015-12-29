@@ -115,7 +115,12 @@ Triolet.prototype.sendToDSP = function(data) {
   this.dsp.recvFromAPI(data);
 };
 
+Triolet.prototype.recvFromClient = function() {
+};
+
 Triolet.prototype.recvFromWorkerClient = function(data) {
+  var _this = this;
+
   if (data instanceof Float32Array) {
     _this._bufSlots[_this._rdBufIndex] = data;
     _this._rdBufIndex += 1;
@@ -124,8 +129,8 @@ Triolet.prototype.recvFromWorkerClient = function(data) {
     }
   } else if (data.type[0] === ":") {
     _this[data.type.substr(1)](data);
-  } else if (typeof _this.api.recvFromClient === "function") {
-    _this.api.recvFromClient(data);
+  } else {
+    _this.recvFromClient(data);
   }
 };
 
