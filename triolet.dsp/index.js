@@ -17,11 +17,11 @@ TrioletDSP.prototype.start = function() {
 TrioletDSP.prototype.stop = function() {
 };
 
-TrioletDSP.prototype.sendToClient = function() {
-  this.triolet.sendToClient.apply(this.triolet, arguments);
+TrioletDSP.prototype.sendToAPI = function() {
+  this.triolet.sendToAPI.apply(this.triolet, arguments);
 };
 
-TrioletDSP.prototype.recvFromClient = function() {
+TrioletDSP.prototype.recvFromAPI = function() {
 };
 
 TrioletDSP.prototype.process = function() {
