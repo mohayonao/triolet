@@ -53,10 +53,10 @@ Triolet.prototype.setup = function(opts) {
     sampleRate: this.sampleRate, bufferLength: this.bufferLength
   });
 
-  delete opts.context;
-  delete opts.destination;
+  opts = JSON.parse(JSON.stringify(opts));
+  opts = assign(opts, { type: ":setup" });
 
-  this._worker.postMessage(assign(opts, { type: ":setup" }));
+  this._worker.postMessage(opts);
 
   this._bufSlotCount = opts.bufferSlotCount;
   this._bufSlots = new Array(this._bufSlotCount);
