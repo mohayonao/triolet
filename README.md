@@ -43,13 +43,10 @@ $ npm install triolet.worker
 
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
-- [triolet.driver](https://github.com/mohayonao/triolet/tree/master/triolet.driver)
-
 
 ## Audio Drivers
 
-- [triolet.driver.webaudio](https://github.com/mohayonao/triolet/tree/master/triolet.driver.webaudio)
-- [triolet.driver.nodeaudio](https://github.com/mohayonao/triolet/tree/master/triolet.driver.nodeaudio)
+- https://github.com/mohayonao/pico.driver
 
 ## License
 
