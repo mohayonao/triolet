@@ -102,10 +102,10 @@ describe("triolet.worker/client", () => {
       assert(driver.stop.callCount === 0);
     });
   });
-  describe(".sendToAPI(data: any)", () => {
+  describe(".sendToWorker(data: any)", () => {
     it("send to the server", () => {
       triolet.compose({ driver });
-      triolet.sendToAPI({ type: "message" });
+      triolet.sendToWorker({ type: "message" });
 
       assert(worker.postMessage.callCount === 1);
       assert.deepEqual(worker.postMessage.args[0][0], { type: "message" });

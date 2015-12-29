@@ -80,7 +80,7 @@ Triolet.prototype.stop = function() {
   return this;
 };
 
-Triolet.prototype.sendToAPI = function() {
+Triolet.prototype.sendToWorker = function() {
   this._worker.postMessage.apply(this._worker, arguments);
 };
 

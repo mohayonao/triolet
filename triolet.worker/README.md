@@ -27,7 +27,7 @@ $ npm install triolet.worker
 - `setup(opts: object): self`
 - `start(): self`
 - `stop(): self`
-- `sendToAPI(data: any): void`
+- `sendToWorker(data: any): void`
 
 ### worker/Triolet
 - `constructor(self: DedicatedWorkerGlobalScope)`
@@ -46,6 +46,7 @@ $ npm install triolet.worker
 - `stop(): self`
 - `sendToAPI(data: any): void`
 - `sendToDSP(data: any): void`
+- `recvFromClient(data: any): void`
 
 ## Interfaces
 
