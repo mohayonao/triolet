@@ -1,6 +1,6 @@
 var API = require("@triolet-example/sine-tone").API;
 var DSP = require("@triolet-example/sine-tone").DSP;
-var Driver = require("triolet.driver.nodeaudio");
+var Driver = require("pico.driver.nodeaudio");
 var triolet = require("triolet.bundle")();
 
 triolet.compose({ api: new API(), dsp: new DSP(), driver: new Driver() });

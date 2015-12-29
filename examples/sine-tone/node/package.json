@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "dependencies": {
     "@triolet-example/sine-tone": "file:..",
-    "triolet.bundle": "^0.5.0",
-    "triolet.driver.nodeaudio": "^0.2.0"
+    "pico.driver.nodeaudio": "^0.1.0",
+    "triolet.bundle": "^0.6.0"
   },
   "main": "src/index.js",
   "private": true

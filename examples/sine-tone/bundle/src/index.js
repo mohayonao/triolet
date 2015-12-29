@@ -1,6 +1,6 @@
 var API = require("@triolet-example/sine-tone").API;
 var DSP = require("@triolet-example/sine-tone").DSP;
-var Driver = require("triolet.driver.webaudio");
+var Driver = require("pico.driver.webaudio");
 var triolet = require("triolet.bundle")();
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;

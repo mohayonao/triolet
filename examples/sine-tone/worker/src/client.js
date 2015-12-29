@@ -1,4 +1,4 @@
-var Driver = require("triolet.driver.webaudio");
+var Driver = require("pico.driver.webaudio");
 var triolet = require("triolet.worker/client")();
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
