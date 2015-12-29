@@ -31,7 +31,7 @@ Triolet.prototype.compose = function(spec) {
   this.driver = driver;
   this._worker = new Worker(workerPath);
   this._worker.onmessage = function(e) {
-    _this.recvFromWorker(e);
+    _this.recvFromWorker(e.data);
   };
 
   api.triolet = this;
