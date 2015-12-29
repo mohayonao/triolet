@@ -14,8 +14,10 @@ $ npm install triolet.client
 
 ## Example
 
+in the main thread
+
 ```js
-const triolet = require("triolet.client/client");
+const triolet = require("triolet.client/client")();
 const Driver = require("pico.driver.webaudio");
 const API = require("./api");
 
@@ -27,10 +29,10 @@ triolet.setup({ context: audioContext, bufferLength: 1024 });
 triolet.start();
 ```
 
-worker.js
+in the worker thread
 
 ```js
-const triolet = require("triolet.client/worker");
+const triolet = require("triolet.client/worker")();
 const DSP = require("./dsp");
 
 triolet.compose({ dsp: new DSP() });

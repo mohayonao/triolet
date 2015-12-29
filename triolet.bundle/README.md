@@ -14,8 +14,10 @@ $ npm install triolet.bundle
 
 ## Example
 
+in the main thread
+
 ```js
-const triolet = require("triolet.bundle");
+const triolet = require("triolet.bundle")();
 const Driver = require("pico.driver.webaudio");
 const API = require("./api");
 const DSP = require("./dsp");

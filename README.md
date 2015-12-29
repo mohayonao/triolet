@@ -17,8 +17,10 @@ All components in the main thread. This architecture works on the browser and th
 $ npm install triolet.bundle
 ```
 
+in the main thread
+
 ```js
-const triolet = require("triolet.bundle");
+const triolet = require("triolet.bundle")();
 const Driver = require("pico.driver.webaudio");
 const API = require("./api");
 const DSP = require("./dsp");
@@ -42,8 +44,10 @@ triolet.start();
 $ npm install triolet.client
 ```
 
+in the main thread
+
 ```js
-const triolet = require("triolet.client/client");
+const triolet = require("triolet.client/client")();
 const Driver = require("pico.driver.webaudio");
 const API = require("./api");
 
@@ -55,10 +59,10 @@ triolet.setup({ context: audioContext, bufferLength: 1024 });
 triolet.start();
 ```
 
-worker.js
+in the worker thread
 
 ```js
-const triolet = require("triolet.client/worker");
+const triolet = require("triolet.client/worker")();
 const DSP = require("./dsp");
 
 triolet.compose({ dsp: new DSP() });
@@ -75,8 +79,10 @@ triolet.compose({ dsp: new DSP() });
 $ npm install triolet.worker
 ```
 
+in the main thread
+
 ```js
-const triolet = require("triolet.worker/client");
+const triolet = require("triolet.worker/client")();
 const Driver = require("pico.driver.webaudio");
 
 let audioContext = new AudioContext();
@@ -87,10 +93,10 @@ triolet.setup({ context: audioContext, bufferLength: 1024 });
 triolet.sendToWorker({ type: "start" });
 ```
 
-worker.js
+in the worker thread
 
 ```js
-const triolet = require("triolet.worker/worker");
+const triolet = require("triolet.worker/worker")();
 const API = require("./api");
 const DSP = require("./dsp");
 
