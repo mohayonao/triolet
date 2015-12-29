@@ -119,18 +119,16 @@ Triolet.prototype.recvFromClient = function() {
 };
 
 Triolet.prototype.recvFromWorkerClient = function(data) {
-  var _this = this;
-
   if (data instanceof Float32Array) {
-    _this._bufSlots[_this._rdBufIndex] = data;
-    _this._rdBufIndex += 1;
-    if (_this._bufSlotCount <= _this._rdBufIndex) {
-      _this._rdBufIndex = 0;
+    this._bufSlots[this._rdBufIndex] = data;
+    this._rdBufIndex += 1;
+    if (this._bufSlotCount <= this._rdBufIndex) {
+      this._rdBufIndex = 0;
     }
   } else if (data.type[0] === ":") {
-    _this[data.type.substr(1)](data);
+    this[data.type.substr(1)](data);
   } else {
-    _this.recvFromClient(data);
+    this.recvFromClient(data);
   }
 };
 
