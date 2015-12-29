@@ -11,11 +11,11 @@ TrioletAPI.prototype.start = function() {
 TrioletAPI.prototype.stop = function() {
 };
 
-TrioletAPI.prototype.sendToServer = function() {
-  this.triolet.sendToServer.apply(this.triolet, arguments);
+TrioletAPI.prototype.sendToDSP = function() {
+  this.triolet.sendToDSP.apply(this.triolet, arguments);
 };
 
-TrioletAPI.prototype.recvFromServer = function() {
+TrioletAPI.prototype.recvFromDSP = function() {
 };
 
 TrioletAPI.prototype.process = function() {

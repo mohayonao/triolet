@@ -21,15 +21,15 @@ $ npm install triolet.api
 - `setup(opts: object): void`
 - `start(): void`
 - `stop(): void`
-- `sendToServer(...args: any): void`
-- `recvFromServer(data: object): void`
+- `sendToDSP(...args: any): void`
+- `recvFromDSP(data: object): void`
 - `process(inNumSamples: number): void`
 
 #### Triolet Interface
 ```
 interface Triolet {
   api: TrioletAPI;
-  sendToServer(...args: any) => void;
+  sendToDSP(...args: any) => void;
 }
 ```
 
