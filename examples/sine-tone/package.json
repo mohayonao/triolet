@@ -2,8 +2,8 @@
   "name": "@triolet-example/sine-tone",
   "version": "1.0.0",
   "dependencies": {
-    "triolet.api": "^0.4.0",
-    "triolet.dsp": "^0.4.0"
+    "triolet.api": "^0.7.0",
+    "triolet.dsp": "^0.7.0"
   },
   "files": [
     "api.js",

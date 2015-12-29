@@ -11,10 +11,10 @@ window.addEventListener("DOMContentLoaded", function() {
 
   document.getElementById("button").onclick = function(e) {
     if (triolet.state === "suspended") {
-      triolet.sendToServer({ type: "start" });
+      triolet.sendToWorker({ type: "start" });
       e.target.textContent = "stop";
     } else {
-      triolet.sendToServer({ type: "stop" });
+      triolet.sendToWorker({ type: "stop" });
       e.target.textContent = "start";
     }
   };

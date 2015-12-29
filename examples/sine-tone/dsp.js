@@ -22,7 +22,7 @@ DSP.prototype.start = function() {
   this._currentTime = 0;
 };
 
-DSP.prototype.recvFromClient = function(data) {
+DSP.prototype.recvFromAPI = function(data) {
   this._sched.push(data);
   this._sched.sort(function(a, b) {
     return a.playbackTime - b.playbackTime;

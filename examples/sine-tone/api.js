@@ -19,7 +19,7 @@ API.prototype.process = function(inNumSamples) {
   this._currentTime += inNumSamples / this.sampleRate;
 
   if (this._counter <= 0) {
-    this.triolet.sendToServer({
+    this.triolet.sendToDSP({
       type: "changeFrequency",
       playbackTime: this._currentTime + this._schedOffset,
       noteNum: sample([ 0, 2, 4, 5, 7, 9, 11 ]),
@@ -28,6 +28,10 @@ API.prototype.process = function(inNumSamples) {
     this._counter += this.sampleRate * 0.25;
   }
   this._counter -= inNumSamples;
+};
+
+API.prototype.recvFromClient = function(data) {
+  this[data.type](data);
 };
 
 function inherits(ctor, superCtor) {
