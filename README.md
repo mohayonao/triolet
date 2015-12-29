@@ -2,7 +2,7 @@
 [![Build Status](http://img.shields.io/travis/mohayonao/triolet.svg?style=flat-square)](https://travis-ci.org/mohayonao/triolet)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://mohayonao.mit-license.org/)
 
-> universal architecture for sound programming in JavaScript
+> 3 layered architecture for sound programming in JavaScript
 
 ## Installation
 
@@ -62,7 +62,7 @@ triolet.start();
 in the worker thread
 
 ```js
-const triolet = require("triolet.client/worker")();
+const triolet = require("triolet.client/worker")(self);
 const DSP = require("./dsp");
 
 triolet.compose({ dsp: new DSP() });
@@ -96,7 +96,7 @@ triolet.sendToWorker({ type: "start" });
 in the worker thread
 
 ```js
-const triolet = require("triolet.worker/worker")();
+const triolet = require("triolet.worker/worker")(self);
 const API = require("./api");
 const DSP = require("./dsp");
 
