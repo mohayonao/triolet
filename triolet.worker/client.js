@@ -31,7 +31,7 @@ Triolet.prototype.compose = function(spec) {
     _this.recvFromServer(e.data);
   };
 
-  driver.triolet = this;
+  driver.processor = this;
 
   return this;
 };
