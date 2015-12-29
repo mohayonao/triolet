@@ -32,7 +32,7 @@ triolet.start();
 in the worker thread
 
 ```js
-const triolet = require("triolet.client/worker")();
+const triolet = require("triolet.client/worker")(self);
 const DSP = require("./dsp");
 
 triolet.compose({ dsp: new DSP() });
