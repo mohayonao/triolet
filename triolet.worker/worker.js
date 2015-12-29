@@ -4,7 +4,6 @@ var config = require("triolet._config");
 function Triolet(self) {
   var _this = this;
 
-  this.self = self;
   this.api = null;
   this.dsp = null;
   this.sampleRate = 0;
@@ -12,6 +11,7 @@ function Triolet(self) {
   this.state = "uninitialized";
   this.timerAPI = global;
 
+  this._self = self;
   this._bufSlots = null;
   this._bufSlotCount = 0;
   this._rdBufIndex = 0;
@@ -22,19 +22,7 @@ function Triolet(self) {
   this._timerId = 0;
 
   self.onmessage = function(e) {
-    var data = e.data;
-
-    if (data instanceof Float32Array) {
-      _this._bufSlots[_this._rdBufIndex] = data;
-      _this._rdBufIndex += 1;
-      if (_this._bufSlotCount <= _this._rdBufIndex) {
-        _this._rdBufIndex = 0;
-      }
-    } else if (data.type[0] === ":") {
-      _this[data.type.substr(1)](data);
-    } else {
-      _this.recvFromClient(data);
-    }
+    _this.recvFromWorkerClient(e.data);
   };
 }
 
@@ -95,7 +83,7 @@ Triolet.prototype.start = function() {
 
   if (this.state === "suspended") {
     this.state = "running";
-    this.self.postMessage({ type: ":start" });
+    this._self.postMessage({ type: ":start" });
     this.api.start();
     this.dsp.start();
     this._timerId = this.timerAPI.setInterval(function() {
@@ -109,7 +97,7 @@ Triolet.prototype.start = function() {
 Triolet.prototype.stop = function() {
   if (this.state === "running") {
     this.state = "suspended";
-    this.self.postMessage({ type: ":stop" });
+    this._self.postMessage({ type: ":stop" });
     this.api.stop();
     this.dsp.stop();
     this.timerAPI.clearInterval(this._timerId);
@@ -119,12 +107,26 @@ Triolet.prototype.stop = function() {
   return this;
 };
 
-Triolet.prototype.sendToClient = function(data) {
-  this.api.recvFromServer(data);
+Triolet.prototype.sendToAPI = function(data) {
+  this.api.recvFromDSP(data);
 };
 
-Triolet.prototype.sendToServer = function(data) {
-  this.dsp.recvFromClient(data);
+Triolet.prototype.sendToDSP = function(data) {
+  this.dsp.recvFromAPI(data);
+};
+
+Triolet.prototype.recvFromWorkerClient = function(data) {
+  if (data instanceof Float32Array) {
+    _this._bufSlots[_this._rdBufIndex] = data;
+    _this._rdBufIndex += 1;
+    if (_this._bufSlotCount <= _this._rdBufIndex) {
+      _this._rdBufIndex = 0;
+    }
+  } else if (data.type[0] === ":") {
+    _this[data.type.substr(1)](data);
+  } else if (typeof _this.api.recvFromClient === "function") {
+    _this.api.recvFromClient(data);
+  }
 };
 
 Triolet.prototype.process = function() {
@@ -146,7 +148,7 @@ Triolet.prototype.process = function() {
       bufIndex += dspBufLength;
     }
 
-    this.self.postMessage(buf, [ buf.buffer ]);
+    this._self.postMessage(buf, [ buf.buffer ]);
     this._bufSlots[this._wrBufIndex] = null;
 
     this._wrBufIndex += 1;

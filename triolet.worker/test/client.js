@@ -9,8 +9,8 @@ function createStub(opts) {
     setup: sinon.spy(),
     start: sinon.spy(),
     stop: sinon.spy(),
-    recvFromServer: sinon.spy(),
-    recvFromClient: sinon.spy(),
+    recvFromDSP: sinon.spy(),
+    recvFromAPI: sinon.spy(),
     process: sinon.spy(),
     sampleRate: opts.sampleRate,
     bufferLength: opts.bufferLength
@@ -102,20 +102,20 @@ describe("triolet.worker/client", () => {
       assert(driver.stop.callCount === 0);
     });
   });
-  describe(".sendToServer(data: any)", () => {
+  describe(".sendToAPI(data: any)", () => {
     it("send to the server", () => {
       triolet.compose({ driver });
-      triolet.sendToServer({ type: "message" });
+      triolet.sendToAPI({ type: "message" });
 
       assert(worker.postMessage.callCount === 1);
       assert.deepEqual(worker.postMessage.args[0][0], { type: "message" });
     });
   });
-  describe(".recvFromServer(data: any)", () => {
+  describe(".recvFromWorker(data: any)", () => {
     it("call triolet method", () => {
       triolet.start = sinon.spy();
       triolet.compose({ driver });
-      triolet.recvFromServer({ type: ":start" });
+      triolet.recvFromWorker({ type: ":start" });
 
       assert(triolet.start.callCount === 1);
     });
@@ -134,7 +134,7 @@ describe("triolet.worker/client", () => {
       triolet.setup({});
       triolet.process(bufL, bufR);
 
-      triolet.recvFromServer(processed);
+      triolet.recvFromWorker(processed);
       triolet.process(bufL, bufR);
       assert.deepEqual(bufL, processed.subarray(0, 1024));
       assert.deepEqual(bufR, processed.subarray(1024, 2048));

@@ -3,11 +3,11 @@ var config = require("triolet._config");
 
 function Triolet() {
   this.driver = null;
-  this.server = null;
   this.sampleRate = 0;
   this.bufferLength = 0;
   this.state = "uninitialized";
 
+  this._worker = null;
   this._bufSlots = null;
   this._bufSlotCount = 0;
   this._rdBufIndex = 0;
@@ -26,9 +26,9 @@ Triolet.prototype.compose = function(spec) {
   this.state = "composed";
 
   this.driver = driver;
-  this.server = new Worker(workerPath);
-  this.server.onmessage = function(e) {
-    _this.recvFromServer(e.data);
+  this._worker = new Worker(workerPath);
+  this._worker.onmessage = function(e) {
+    _this.recvFromWorker(e.data);
   };
 
   driver.processor = this;
@@ -56,7 +56,7 @@ Triolet.prototype.setup = function(opts) {
   delete opts.context;
   delete opts.destination;
 
-  this.server.postMessage(assign(opts, { type: ":setup" }));
+  this._worker.postMessage(assign(opts, { type: ":setup" }));
 
   this._bufSlotCount = opts.bufferSlotCount;
   this._bufSlots = new Array(this._bufSlotCount);
@@ -80,11 +80,11 @@ Triolet.prototype.stop = function() {
   return this;
 };
 
-Triolet.prototype.sendToServer = function() {
-  this.server.postMessage.apply(this.server, arguments);
+Triolet.prototype.sendToAPI = function() {
+  this._worker.postMessage.apply(this._worker, arguments);
 };
 
-Triolet.prototype.recvFromServer = function(data) {
+Triolet.prototype.recvFromWorker = function(data) {
   if (data instanceof Float32Array) {
     this._bufSlots[this._rdBufIndex] = data;
     this._rdBufIndex += 1;
@@ -103,7 +103,7 @@ Triolet.prototype.process = function(bufL, bufR) {
     bufL.set(buf.subarray(0, this.bufferLength));
     bufR.set(buf.subarray(this.bufferLength));
 
-    this.server.postMessage(buf, [ buf.buffer ]);
+    this._worker.postMessage(buf, [ buf.buffer ]);
     this._bufSlots[this._wrBufIndex] = null;
 
     this._wrBufIndex += 1;

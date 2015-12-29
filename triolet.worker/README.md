@@ -18,14 +18,16 @@ $ npm install triolet.worker
 
 #### Instance attributes
 - `driver: TrioletDriver`
-- `sampleRate: number` _(readonly)_
-- `bufferLength: number` _(readonly)_
+- `sampleRate: number` _(implicit readonly)_
+- `bufferLength: number` _(implicit readonly)_
+- `state: string` _(implicit readonly)_
 
 #### Instance methods
 - `compose(spec: object): self`
 - `setup(opts: object): self`
 - `start(): self`
 - `stop(): self`
+- `sendToAPI(data: any): void`
 
 ### worker/Triolet
 - `constructor(self: DedicatedWorkerGlobalScope)`
@@ -33,27 +35,26 @@ $ npm install triolet.worker
 #### Instance attributes
 - `api: TrioletAPI`
 - `dsp: TrioletDSP`
-- `sampleRate: number` _(readonly)_
-- `bufferLength: number` _(readonly)_
+- `sampleRate: number` _(implicit readonly)_
+- `bufferLength: number` _(implicit readonly)_
+- `state: string` _(implicit readonly)_
 
 #### Instance methods
 - `compose(spec: object): self`
 - `setup(opts: object): self`
 - `start(): self`
 - `stop(): self`
-- `sendToClient(data: any): void`
-- `sendToServer(data: any): void`
+- `sendToAPI(data: any): void`
+- `sendToDSP(data: any): void`
 
 ## Interfaces
 
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
-- [triolet.driver](https://github.com/mohayonao/triolet/tree/master/triolet.driver)
 
+## Audio Driver
 
-## Audio Drivers
-
-- [triolet.driver.webaudio](https://github.com/mohayonao/triolet/tree/master/triolet.driver.webaudio)
+- https://github.com/mohayonao/pico.driver
 
 ## License
 
