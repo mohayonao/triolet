@@ -1,7 +1,7 @@
 {
   "name": "triolet.bundle",
   "description": "triolet.bundle",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/triolet/issues"

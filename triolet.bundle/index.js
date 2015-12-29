@@ -83,12 +83,12 @@ Triolet.prototype.stop = function() {
   return this;
 };
 
-Triolet.prototype.sendToClient = function(data) {
-  this.api.recvFromServer(data);
+Triolet.prototype.sendToAPI = function(data) {
+  this.api.recvFromDSP(data);
 };
 
-Triolet.prototype.sendToServer = function(data) {
-  this.dsp.recvFromClient(data);
+Triolet.prototype.sendToDSP = function(data) {
+  this.dsp.recvFromAPI(data);
 };
 
 Triolet.prototype.process = function(bufL, bufR) {

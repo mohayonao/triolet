@@ -19,29 +19,27 @@ $ npm install triolet.bundle
 #### Instance attributes
 - `api: TrioletAPI`
 - `dsp: TrioletDSP`
-- `driver: TrioletDriver`
-- `sampleRate: number` _(readonly)_
-- `bufferLength: number` _(readonly)_
+- `driver: pico.driver`
+- `sampleRate: number` _(implicit readonly)_
+- `bufferLength: number` _(implicit readonly)_
+- `state: string` _(implicit readonly)_
 
 #### Instance methods
 - `compose(spec: object): self`
 - `setup(opts: object): self`
 - `start(): self`
 - `stop(): self`
-- `sendToClient(data: any): void`
-- `sendToServer(data: any): void`
+- `sendToAPI(data: any): void`
+- `sendToDSP(data: any): void`
 
 ## Interfaces
 
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
-- [triolet.driver](https://github.com/mohayonao/triolet/tree/master/triolet.driver)
 
+## Audio Driver
 
-## Audio Drivers
-
-- [triolet.driver.webaudio](https://github.com/mohayonao/triolet/tree/master/triolet.driver.webaudio)
-- [triolet.driver.nodeaudio](https://github.com/mohayonao/triolet/tree/master/triolet.driver.nodeaudio)
+- https://github.com/mohayonao/pico.driver
 
 ## License
 
