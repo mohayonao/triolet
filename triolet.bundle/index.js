@@ -1,5 +1,6 @@
 var assign = require("object-assign");
 var config = require("triolet._config");
+var noop = function() {};
 
 function Triolet() {
   this.api = null;
@@ -29,6 +30,16 @@ Triolet.prototype.compose = function(spec) {
   this.dsp = dsp;
   this.driver = driver;
 
+  if (typeof api.recvFromDSP !== "function") {
+    api.recvFromDSP = noop;
+  }
+  if (typeof api.process !== "function") {
+    api.process = noop;
+  }
+  if (typeof dsp.recvFromAPI !== "function") {
+    dsp.recvFromAPI = noop;
+  }
+
   api.triolet = this;
   dsp.triolet = this;
   driver.processor = this;
@@ -51,10 +62,15 @@ Triolet.prototype.setup = function(opts) {
     sampleRate: this.sampleRate, bufferLength: this.bufferLength
   });
 
-  this.api.setup(opts);
-  this.dsp.setup(opts);
-
-  this._dspBufLength = this.dsp.bufferLength;
+  if (typeof this.api.setup === "function") {
+    this.api.setup(opts);
+  }
+  if (typeof this.dsp.setup === "function") {
+    this.dsp.setup(opts);
+    this._dspBufLength = this.dsp.bufferLength || opts.dspBufferLength;
+  } else {
+    this._dspBufLength = opts.dspBufferLength;
+  }
   this._dspBufL = new Float32Array(this._dspBufLength);
   this._dspBufR = new Float32Array(this._dspBufLength);
 
@@ -67,8 +83,12 @@ Triolet.prototype.start = function() {
   if (this.state === "suspended") {
     this.state = "running";
     this.driver.start();
-    this.api.start();
-    this.dsp.start();
+    if (typeof this.api.start === "function") {
+      this.api.start();
+    }
+    if (typeof this.dsp.start === "function") {
+      this.dsp.start();
+    }
   }
   return this;
 };
@@ -77,8 +97,12 @@ Triolet.prototype.stop = function() {
   if (this.state === "running") {
     this.state = "suspended";
     this.driver.stop();
-    this.api.stop();
-    this.dsp.stop();
+    if (typeof this.api.stop === "function") {
+      this.api.stop();
+    }
+    if (typeof this.dsp.stop === "function") {
+      this.dsp.stop();
+    }
   }
   return this;
 };
