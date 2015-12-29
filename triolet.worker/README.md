@@ -31,7 +31,7 @@ triolet.sendToWorker({ type: "start" });
 in the worker thread
 
 ```js
-const triolet = require("triolet.worker/worker")();
+const triolet = require("triolet.worker/worker")(self);
 const API = require("./api");
 const DSP = require("./dsp");
 
