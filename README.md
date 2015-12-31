@@ -53,7 +53,7 @@ const API = require("./api");
 
 let audioContext = new AudioContext();
 
-triolet.compose({ workerPath: "/path/to/worker", api: new API(), driver: new Driver() });
+triolet.compose({ api: new API(), driver: new Driver(), workerPath: "/path/to/worker" });
 triolet.setup({ context: audioContext, bufferLength: 1024 });
 
 triolet.start();
@@ -87,7 +87,7 @@ const Driver = require("pico.driver.webaudio");
 
 let audioContext = new AudioContext();
 
-triolet.compose({ workerPath: "/path/to/worker", driver: new Driver() });
+triolet.compose({ driver: new Driver(), workerPath: "/path/to/worker" });
 triolet.setup({ context: audioContext, bufferLength: 1024 });
 
 triolet.sendToWorker({ type: "start" });
@@ -114,7 +114,7 @@ triolet.recvFromClient = (e) => {
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
 
 ```
-interface trioletAPI {
+interface TrioletAPI {
   optional setup(opts: object) => void;
   optional start() => void;
   optional stop() => void;
@@ -125,7 +125,7 @@ interface trioletAPI {
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
 
 ```
-interface trioletDSP {
+interface TrioletDSP {
   optional setup(opts: object) => void;
   optional start() => void;
   optional stop() => void;

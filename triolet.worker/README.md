@@ -22,7 +22,7 @@ const Driver = require("pico.driver.webaudio");
 
 let audioContext = new AudioContext();
 
-triolet.compose({ workerPath: "/path/to/worker", driver: new Driver() });
+triolet.compose({ driver: new Driver(), workerPath: "/path/to/worker" });
 triolet.setup({ context: audioContext, bufferLength: 1024 });
 
 triolet.sendToWorker({ type: "start" });

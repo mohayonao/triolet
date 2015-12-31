@@ -23,7 +23,7 @@ const API = require("./api");
 
 let audioContext = new AudioContext();
 
-triolet.compose({ workerPath: "/path/to/worker", api: new API(), driver: new Driver() });
+triolet.compose({ api: new API(), driver: new Driver(), workerPath: "/path/to/worker" });
 triolet.setup({ context: audioContext, bufferLength: 1024 });
 
 triolet.start();
