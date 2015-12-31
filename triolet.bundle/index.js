@@ -1,6 +1,5 @@
 var assign = require("object-assign");
 var config = require("triolet._config");
-var noop = function() {};
 
 function Triolet() {
   this.api = null;
@@ -29,16 +28,6 @@ Triolet.prototype.compose = function(spec) {
   this.api = api;
   this.dsp = dsp;
   this.driver = driver;
-
-  if (typeof api.recvFromDSP !== "function") {
-    api.recvFromDSP = noop;
-  }
-  if (typeof api.process !== "function") {
-    api.process = noop;
-  }
-  if (typeof dsp.recvFromAPI !== "function") {
-    dsp.recvFromAPI = noop;
-  }
 
   api.triolet = this;
   dsp.triolet = this;
@@ -108,11 +97,15 @@ Triolet.prototype.stop = function() {
 };
 
 Triolet.prototype.sendToAPI = function(data) {
-  this.api.recvFromDSP(data);
+  if (typeof this.api.recvFromDSP === "function") {
+    this.api.recvFromDSP(data);
+  }
 };
 
 Triolet.prototype.sendToDSP = function(data) {
-  this.dsp.recvFromAPI(data);
+  if (typeof this.dsp.recvFromAPI === "function") {
+    this.dsp.recvFromAPI(data);
+  }
 };
 
 Triolet.prototype.process = function(bufL, bufR) {
@@ -123,7 +116,9 @@ Triolet.prototype.process = function(bufL, bufR) {
   var dspBufR = this._dspBufR;
 
   while (bufIndex < bufLength) {
-    this.api.process(dspBufLength);
+    if (this.api.process) {
+      this.api.process(dspBufLength);
+    }
     this.dsp.process(dspBufL, dspBufR);
 
     bufL.set(dspBufL, bufIndex);
