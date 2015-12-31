@@ -135,7 +135,8 @@ interface TrioletDSP {
 
 ## Audio Drivers
 
-- https://github.com/mohayonao/pico.driver
+- [pico.driver.webaudio](https://github.com/mohayonao/pico.driver/tree/master/pico.driver.webaudio)
+- [pico.driver.nodeaudio](https://github.com/mohayonao/pico.driver/tree/master/pico.driver.nodeaudio)
 
 ## License
 
