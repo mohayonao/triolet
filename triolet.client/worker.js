@@ -1,6 +1,5 @@
 var assign = require("object-assign");
 var config = require("triolet._config");
-var noop = function() {};
 
 function Triolet(self) {
   var _this = this;
@@ -36,10 +35,6 @@ Triolet.prototype.compose = function(spec) {
   this.state = "composed";
 
   this.dsp = dsp;
-
-  if (typeof dsp.recvFromAPI !== "function") {
-    dsp.recvFromAPI = noop;
-  }
 
   dsp.triolet = this;
 
@@ -118,7 +113,7 @@ Triolet.prototype.recvFromWorkerClient = function(data) {
     }
   } else if (data && (data.type === ":setup" || data.type === ":start" || data.type === ":stop")) {
     this[data.type.substr(1)](data);
-  } else {
+  } else if (typeof this.dsp.recvFromAPI === "function") {
     this.dsp.recvFromAPI(data);
   }
 };

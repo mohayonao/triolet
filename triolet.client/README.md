@@ -77,7 +77,7 @@ triolet.compose({ dsp: new DSP() });
 - [triolet.api](https://github.com/mohayonao/triolet/tree/master/triolet.api)
 
 ```
-interface trioletAPI {
+interface TrioletAPI {
   optional setup(opts: object) => void;
   optional start() => void;
   optional stop() => void;
@@ -88,7 +88,7 @@ interface trioletAPI {
 - [triolet.dsp](https://github.com/mohayonao/triolet/tree/master/triolet.dsp)
 
 ```
-interface trioletDSP {
+interface TrioletDSP {
   optional setup(opts: object) => void;
   optional start() => void;
   optional stop() => void;
@@ -98,7 +98,7 @@ interface trioletDSP {
 
 ## Audio Drivers
 
-- https://github.com/mohayonao/pico.driver
+- [pico.driver.webaudio](https://github.com/mohayonao/pico.driver/tree/master/pico.driver.webaudio)
 
 ## License
 
